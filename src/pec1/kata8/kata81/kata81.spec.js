@@ -1,7 +1,11 @@
 import tree from './kata81';
 
-test('Debe tener una propiedad species y una fruit', () => {
-  expect(Object.keys(tree)).toEqual(['species', 'fruit']);
+test('Debe tener una propiedad species', () => {
+  expect.objectContaining({ species: '' });
+});
+
+test('Debe tener una propiedad fruit', () => {
+  expect.objectContaining({ fruit: '' });
 });
 
 test('El valor de la propiedad species debe ser appleTree', () => {

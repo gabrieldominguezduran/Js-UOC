@@ -1,7 +1,7 @@
-import PlantTree from './kata.91';
+import plantTree from './kata.91';
 
-const myTree = new PlantTree('pearTree', 'pear');
-const myTree2 = new PlantTree(2, 3);
+const myTree = new plantTree('pearTree', 'pear');
+const myTree2 = new plantTree(2, 3);
 
 const isValid = (obj) => {
   if (Object.entries(obj).length === 0) {

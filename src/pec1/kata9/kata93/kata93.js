@@ -1,11 +1,8 @@
-function getSpecies(species) {
-  return species;
-}
-function getFruit(fruit) {
-  return fruit;
-}
-
-export default function GetPlantTree() {
-  this.getSpecies = getSpecies;
-  this.getFruit = getFruit;
+export default function plantTree(species, fruit) {
+  this.getSpecies = function () {
+    return (this.species = species);
+  };
+  this.getFruit = function () {
+    return (this.fruit = fruit);
+  };
 }

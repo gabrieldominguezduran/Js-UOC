@@ -1,6 +1,6 @@
-import OtherPlantTree from './kata.92';
+import plantTree from './kata.92';
 
-const myTree = new OtherPlantTree();
+const myTree = new plantTree('pearTree', 'pear');
 
 test('Debe incuir propiedad species', () => {
   expect(myTree.hasOwnProperty('species')).toBe(true);
@@ -15,5 +15,5 @@ test('Debe incuir propiedad getFruit', () => {
 });
 
 test('Al invocar el método getFruit nos devuelve el valor pear', () => {
-  expect(myTree.getFruit('pear')).toBe('pear');
+  expect(myTree.getFruit()).toBe('pear');
 });

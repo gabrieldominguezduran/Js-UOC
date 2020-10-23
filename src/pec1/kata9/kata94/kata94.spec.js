@@ -15,6 +15,7 @@ test('Al crear un árbol e invocar posteriormente setFruit con el valor 12 el ob
 test('Al crear un árbol e invocar posteriormente setFruit con el valor ‘apple’ el objeto tree tiene apple como valor de la propiedad fruit', () => {
   expect(tree.setFruit('apple')).toBe('apple');
 });
+
 test('Al crear un árbol e invocar posteriormente setSpecies con el valor 12 el objeto tree mantiene su valor previo', () => {
   expect(tree.setSpecies(12)).not.toBe(12);
 });

@@ -6,7 +6,7 @@ export default function plantTree(species, fruit) {
     if (typeof setSpecies === 'string') {
       return (this.species = setSpecies);
     } else {
-      throw new Error();
+      throw new Error('Not valid tree');
     }
   };
   this.getFruit = function () {
@@ -16,7 +16,7 @@ export default function plantTree(species, fruit) {
     if (typeof setFruit === 'string') {
       return (this.fruit = setFruit);
     } else {
-      throw new Error();
+      throw new Error('Not valid fruit');
     }
   };
 }

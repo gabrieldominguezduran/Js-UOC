@@ -5,8 +5,8 @@
   "main": "src/index.html",
   "scripts": {
     "dev": "parcel src/index.html --open",
-     "format": "prettier --write \"src/**/*.js\"",
-   "lint": "eslint \"src/**/*.js\" --quiet",
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "eslint \"src/**/*.js\" --quiet",
     "test": "jest --passWithNoTests --silent",
     "tdd": "jest --watchAll"
   },
@@ -22,5 +22,11 @@
     "jest": "^26.4.2",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.1.2"
+  },
+  "browserslist": [
+    "last 1 Chrome versions"
+  ],
+  "dependencies": {
+    "node-fetch": "^2.6.1"
   }
 }

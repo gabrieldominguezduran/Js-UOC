@@ -1,7 +1,7 @@
 const baseUrl = 'https://swapi.dev/api/';
 const fetch = require('node-fetch');
 
-export const getData = async () => {
+async function getData() {
   let response = await fetch(`${baseUrl}films/`);
   let data = await response.json();
   if (response.status === 200) {
@@ -9,15 +9,15 @@ export const getData = async () => {
   } else {
     throw new Error('Something go wrong!');
   }
-};
+}
 
-export const getMovieCount = async () => {
+async function getMovieCount() {
   let response = await getData();
   return response.count;
-};
+}
 getMovieCount();
 
-export const listMovies = async () => {
+async function listMovies() {
   let Film = [];
   let response = await getData();
   let films = await response.results;
@@ -30,10 +30,10 @@ export const listMovies = async () => {
     });
   });
   return Film;
-};
+}
 listMovies();
 
-export const listMoviesSorted = async () => {
+async function listMoviesSorted() {
   let films = await listMovies();
 
   return films.sort((a, b) => {
@@ -48,10 +48,10 @@ export const listMoviesSorted = async () => {
 
     return 0;
   });
-};
+}
 listMoviesSorted();
 
-export const listEvenMoviesSorted = async () => {
+async function listEvenMoviesSorted() {
   let films = await listMovies();
   let evenFilms = [];
   films.forEach((f) => {
@@ -63,10 +63,10 @@ export const listEvenMoviesSorted = async () => {
     return a.episodeID - b.episodeID;
   });
   return evenFilms;
-};
+}
 listEvenMoviesSorted();
 
-export const getMovieInfo = async (id) => {
+async function getMovieInfo(id) {
   let film = [];
   let response = await fetch(`${baseUrl}films/${id}/`);
   let data = await response.json();
@@ -80,7 +80,7 @@ export const getMovieInfo = async (id) => {
     throw new Error('Something go wrong!');
   }
   return film;
-};
+}
 
 getMovieInfo('1');
 
@@ -95,7 +95,7 @@ getMovieInfo('1');
 // }
 // getCharacterName('http://swapi.dev/api/people/1/');
 
-export const getCharacterName = async (url) => {
+async function getCharacterName(url) {
   url = url.replace('http://', 'https://');
   let response = await fetch(url);
   let data = await response.json();
@@ -104,57 +104,51 @@ export const getCharacterName = async (url) => {
   } else {
     throw new Error('Something go wrong!');
   }
-};
+}
 getCharacterName('http://swapi.dev/api/people/1/');
 
-export const getMovieCharacters = async (id) => {
+async function getMovieCharacters(id) {
   let filmData = await getMovieInfo(id);
   let name = filmData[0].name;
   let episodeID = filmData[0].episodeID;
-  let characters = [];
-  Promise.all(
+  let characters = await Promise.all(
     filmData[0].characters.map(async (u) => {
       let res = await getCharacterName(u);
-      return characters.push(res);
+      return res;
     })
   );
   return { episodeID, name, characters };
-};
+}
 getMovieCharacters('1');
 
-export const getMovieCharactersAndHomeworlds = async (id) => {
+async function getMovieCharactersAndHomeworlds(id) {
   let filmData = await getMovieInfo(id);
-  let urls = filmData[0].characters;
   let episodeID = filmData[0].episodeID;
   let name = filmData[0].name;
-  let character = urls.map(async (url) => {
-    let response = await fetch(url);
-    let data = await response.json();
-    let worldsData = await fetch(data.homeworld);
-    let world = await worldsData.json();
-    let names = {
-      name: data.name,
-      homeworld: world.name,
-    };
-    return names;
-  });
-  let characters = [];
-  Promise.all(character).then((responses) =>
-    responses.forEach((response) => {
-      return characters.push(response);
+  let characters = await Promise.all(
+    filmData[0].characters.map(async (url) => {
+      let response = await fetch(url);
+      let data = await response.json();
+      let worldsData = await fetch(data.homeworld);
+      let world = await worldsData.json();
+      let names = {
+        name: data.name,
+        homeworld: world.name,
+      };
+      return names;
     })
   );
 
   return { episodeID, name, characters };
-};
+}
 getMovieCharactersAndHomeworlds('1');
 
-export const createMovie = async (id) => {
+async function createMovie(id) {
   const movie = await getMovieInfo(id);
   return new Movie(movie[0].name, movie[0].characters);
-};
+}
 
-export class Movie {
+class Movie {
   constructor(name, characters) {
     if (typeof name !== 'string') {
       throw new Error('name must be one strings');
@@ -225,3 +219,16 @@ async function createMovie2(id) {
     throw new Error('Something go wrong!');
   }
 }
+
+export default {
+  getMovieCount,
+  listMovies,
+  listMoviesSorted,
+  listEvenMoviesSorted,
+  getMovieInfo,
+  getCharacterName,
+  getMovieCharacters,
+  getMovieCharactersAndHomeworlds,
+  createMovie,
+  Movie,
+};

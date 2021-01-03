@@ -1,5 +1,5 @@
 import * as pec2 from './pec2';
-import user_image from './assets/user.svg';
+import user_image from '../assets/user.svg';
 const setIds = {
   1: 4,
   2: 5,
